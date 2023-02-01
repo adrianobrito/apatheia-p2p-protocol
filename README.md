@@ -13,3 +13,5 @@ sbt run
 ```shell
 sbt test
 ```
+
+![](GENERAL_ARCHITECTURE.png)
