@@ -14,4 +14,4 @@ sbt run
 sbt test
 ```
 
-![](GENERAL_ARCHITECTURE.png)
+![](https://raw.githubusercontent.com/adrianobrito/apatheia-p2p-protocol/main/GENERAL%20ARCHITECTURE.png)
