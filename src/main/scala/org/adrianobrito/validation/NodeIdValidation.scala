@@ -9,7 +9,7 @@ import org.adrianobrito.error
 class NodeIdValidation extends Valid[NodeId] {
 
   override def validate(t: NodeId): Either[error.Error, NodeId] = if (
-    t.value.bitCount > 160
+    t.value.bitCount <= 160
   ) {
     Right(t)
   } else {
