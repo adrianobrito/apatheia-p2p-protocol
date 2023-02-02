@@ -14,6 +14,8 @@ lazy val root = (project in file(".")).settings(
     // better monadic for compiler plugin as suggested by documentation
     compilerPlugin("com.olegpy" %% "better-monadic-for" % "0.3.1"),
     "org.scalactic" %% "scalactic" % "3.2.15",
-    "org.scalatest" %% "scalatest" % "3.2.15" % "test"
+    "org.scalatest" %% "scalatest" % "3.2.15" % "test",
+    "org.scalatestplus" %% "mockito-4-6" % "3.2.15.0" % "test",
+    "org.mockito" % "mockito-core" % "4.6.0" % "test"
   )
 )
