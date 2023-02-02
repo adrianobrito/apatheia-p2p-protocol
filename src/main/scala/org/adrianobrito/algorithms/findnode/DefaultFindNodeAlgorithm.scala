@@ -36,12 +36,7 @@ case class DefaultFindNodeAlgorithm[F[_]: Async: Applicative](
       Async[F].pure(Set.empty)
     } else {
       (for {
-        contacts <- Async[F]
-          .pure(
-            closestContacts
-              .filter(_.nodeId.value != targetId.value)
-              .toSet[Contact]
-          )
+        contacts <- filterFromTargetNode(closestContacts, targetId)
         requestContacts <- sendFindNodeRequests(contacts)
       } yield (requestContacts.toList
         .sortBy(
@@ -61,6 +56,16 @@ case class DefaultFindNodeAlgorithm[F[_]: Async: Applicative](
       })
     }
   }
+
+  private def filterFromTargetNode(
+      closestContacts: List[Contact],
+      targetId: NodeId
+  ): F[Set[Contact]] = Async[F]
+    .pure(
+      closestContacts
+        .filter(_.nodeId.value != targetId.value)
+        .toSet[Contact]
+    )
 
   private def sendFindNodeRequests(
       nodeContacts: Set[Contact]
