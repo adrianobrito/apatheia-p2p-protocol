@@ -71,7 +71,7 @@ case class DefaultFindNodeAlgorithm[F[_]: Async: Applicative](
     nodeContacts: Set[Contact]
   ): F[Set[Contact]] =
     nodeContacts.toList
-      .map(contact => findNodeClient.requestNodeContacts(contact))
+      .map(contact => findNodeClient.requestContacts(contact))
       .flatTraverse(a => a)
       .flatMap(a => Async[F].pure((a.toSet[Contact])))
 
