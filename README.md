@@ -25,7 +25,7 @@ sbt test
 
 ## Contributing
 
-We welcome contributions to Apatheia. If you are interested in contributing, please read our CONTRIBUTING.md file for more information.
+We welcome contributions to Apatheia. If you are interested in contributing, please read our [CONTRIBUTING.md](https://github.com/adrianobrito/apatheia-p2p-protocol/blob/main/CONTRIBUTING.md) file for more information.
 
 ## License
 
