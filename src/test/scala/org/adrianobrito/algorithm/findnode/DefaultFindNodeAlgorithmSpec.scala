@@ -9,13 +9,12 @@ import org.adrianobrito.algorithms.findnode.DefaultFindNodeAlgorithm
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import org.scalatestplus.mockito.MockitoSugar
+import org.mockito.Mockito._
 
 import cats.effect.unsafe.implicits.global
+import org.mockito.ArgumentMatchers
 
-class DefaultFindNodeAlgorithmSpec
-    extends AnyFlatSpec
-    with Matchers
-    with MockitoSugar {
+class DefaultFindNodeAlgorithmSpec extends AnyFlatSpec with Matchers with MockitoSugar {
 
   def mockFindNodeClient(expectedContacts: Set[Contact]) =
     new FindNodeClient[IO] {
@@ -59,8 +58,8 @@ class DefaultFindNodeAlgorithmSpec
   }
 
   it should "call findClosestContacts on the routing table" in {
-    val routingTable = mock[RoutingTable]
-    val findNodeClient = mock[FindNodeClient[IO]]
+    val routingTable      = mock[RoutingTable]
+    val findNodeClient    = mock[FindNodeClient[IO]]
     val findNodeAlgorithm = DefaultFindNodeAlgorithm[IO](findNodeClient)
 
     when(routingTable.findClosestContacts(NodeId(1)))
@@ -71,25 +70,24 @@ class DefaultFindNodeAlgorithmSpec
   }
 
   it should "send a find node request for every contact in the closestContacts list" in {
-    val routingTable = mock[RoutingTable]
-    val findNodeClient = mock[FindNodeClient[IO]]
+    val routingTable      = mock[RoutingTable]
+    val findNodeClient    = mock[FindNodeClient[IO]]
     val findNodeAlgorithm = DefaultFindNodeAlgorithm[IO](findNodeClient)
 
-    when(routingTable.findClosestContacts(NodeId(1)))
-      .thenReturn(
-        List(
-          Contact(NodeId(2), "localhost", 12345),
-          Contact(NodeId(3), "localhost", 12345)
-        )
+    when(routingTable.findClosestContacts(NodeId(1))).thenReturn(
+      List(
+        Contact(NodeId(2), "localhost", 12345),
+        Contact(NodeId(3), "localhost", 12335)
       )
+    )
+
     when(
       findNodeClient.requestNodeContacts(Contact(NodeId(2), "localhost", 12345))
-    )
-      .thenReturn(IO(List(Contact(NodeId(4), "localhost", 12345))))
+    ).thenReturn(IO(List(Contact(NodeId(4), "localhost", 12345))))
+
     when(
-      findNodeClient.requestNodeContacts(Contact(NodeId(3), "localhost", 12345))
-    )
-      .thenReturn(IO(List(Contact(NodeId(5), "localhost", 12345))))
+      findNodeClient.requestNodeContacts(Contact(NodeId(3), "localhost", 12335))
+    ).thenReturn(IO(List(Contact(NodeId(5), "localhost", 12345))))
 
     findNodeAlgorithm.findNode(routingTable, NodeId(1), 1).unsafeRunSync()
 
@@ -97,8 +95,29 @@ class DefaultFindNodeAlgorithmSpec
       Contact(NodeId(2), "localhost", 12345)
     )
     verify(findNodeClient).requestNodeContacts(
-      Contact(NodeId(3), "localhost", 12345)
+      Contact(NodeId(3), "localhost", 12335)
     )
+  }
+
+  it should "not go more iterations than necessary" in {
+    val mockFindNodeClient = mock[FindNodeClient[IO]]
+    val algorithm          = DefaultFindNodeAlgorithm[IO](mockFindNodeClient)
+    val routingTable       = RoutingTable(nodeId = NodeId(1), contacts = List.empty)
+    val maxIterations      = 3
+    val targetNodeId       = NodeId(2)
+    val targetContact      = Contact(targetNodeId, "localhost", 12345)
+
+    when(
+      mockFindNodeClient
+        .requestNodeContacts(ArgumentMatchers.any[Contact]())
+    ).thenReturn(IO.pure(List.empty[Contact]))
+
+    val result =
+      algorithm
+        .findNode(targetId = targetNodeId, routingTable = routingTable, maxIterations = maxIterations)
+        .unsafeRunSync()
+
+    result shouldBe Set.empty
   }
 
 }
