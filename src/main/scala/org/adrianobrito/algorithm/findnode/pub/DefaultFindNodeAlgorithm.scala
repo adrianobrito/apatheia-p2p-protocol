@@ -1,4 +1,4 @@
-package org.adrianobrito.algorithms.findnode.pub
+package org.adrianobrito.algorithm.findnode.pub
 
 import org.adrianobrito.model.RoutingTable
 import org.adrianobrito.model.NodeId
@@ -7,7 +7,6 @@ import cats.effect.kernel.Async
 import cats.implicits._
 import cats.Applicative
 import scala.annotation.tailrec
-
 import org.adrianobrito.algorithms.findnode.FindNodeClient
 import org.adrianobrito.algorithms.findnode.pub.FindNodeAlgorithm
 
@@ -50,7 +49,7 @@ case class DefaultFindNodeAlgorithm[F[_]: Async: Applicative](
           retryFindNodeRequest(
             iteration = iteration - 1,
             routingTable = routingTable,
-            closestContacts = foundContacts,
+            closestContacts = closestContacts,
             targetId = targetId
           )
         } else {
