@@ -69,6 +69,20 @@ class DefaultStoreAlgorithmSpec extends AnyFreeSpec with Matchers with ScalaFutu
         result shouldBe Set(Contact(NodeId(22), "localhost", 8081))
       }
 
+      "should return a set of failed response contacts" in {
+        val nodeId       = NodeId(9999)
+        val routingTable = RoutingTable(nodeId, List.empty)
+        val storeClient = new StoreClient[IO] {
+          override def sendStoreRequest(request: StoreRequest): IO[StoreClient.StoreResponse] =
+            IO.pure(Left(StoreRequestError(Contact(NodeId(2), "1.0.0.99", 1111))))
+        }
+        val storeAlgorithm = new DefaultStoreAlgorithm[IO](routingTable, storeClient)
+        storeAlgorithm.store(NodeId(3), Array.empty[Byte])().map { contacts =>
+          contacts shouldBe a[Set[_]]
+          contacts.size shouldBe routingTable.contacts.size
+        }
+      }
+
     }
   }
 }
