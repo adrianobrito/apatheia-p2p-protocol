@@ -1,11 +1,8 @@
-package org.adrianobrito.algorithm.findnode
+package org.adrianobrito.algorithm.findnode.pub
 
-import org.mockito.Mockito._
-import org.adrianobrito.algorithms.findnode.FindNodeClient
 import org.adrianobrito.model.{NodeId, Contact, RoutingTable}
 import cats.effect.IO
 import cats.Applicative
-import org.adrianobrito.algorithms.findnode.DefaultFindNodeAlgorithm
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import org.scalatestplus.mockito.MockitoSugar
@@ -13,12 +10,14 @@ import org.mockito.Mockito._
 
 import cats.effect.unsafe.implicits.global
 import org.mockito.ArgumentMatchers
+import org.adrianobrito.algorithms.findnode.pub.DefaultFindNodeAlgorithm
+import org.adrianobrito.algorithms.findnode.FindNodeClient
 
 class DefaultFindNodeAlgorithmSpec extends AnyFlatSpec with Matchers with MockitoSugar {
 
   def mockFindNodeClient(expectedContacts: Set[Contact]) =
     new FindNodeClient[IO] {
-      override def requestNodeContacts(contact: Contact): IO[List[Contact]] =
+      override def requestContacts(contact: Contact): IO[List[Contact]] =
         IO.pure(expectedContacts.toList)
     }
 
@@ -82,19 +81,19 @@ class DefaultFindNodeAlgorithmSpec extends AnyFlatSpec with Matchers with Mockit
     )
 
     when(
-      findNodeClient.requestNodeContacts(Contact(NodeId(2), "localhost", 12345))
+      findNodeClient.requestContacts(Contact(NodeId(2), "localhost", 12345))
     ).thenReturn(IO(List(Contact(NodeId(4), "localhost", 12345))))
 
     when(
-      findNodeClient.requestNodeContacts(Contact(NodeId(3), "localhost", 12335))
+      findNodeClient.requestContacts(Contact(NodeId(3), "localhost", 12335))
     ).thenReturn(IO(List(Contact(NodeId(5), "localhost", 12345))))
 
     findNodeAlgorithm.findNode(routingTable, NodeId(1), 1).unsafeRunSync()
 
-    verify(findNodeClient).requestNodeContacts(
+    verify(findNodeClient).requestContacts(
       Contact(NodeId(2), "localhost", 12345)
     )
-    verify(findNodeClient).requestNodeContacts(
+    verify(findNodeClient).requestContacts(
       Contact(NodeId(3), "localhost", 12335)
     )
   }
@@ -109,7 +108,7 @@ class DefaultFindNodeAlgorithmSpec extends AnyFlatSpec with Matchers with Mockit
 
     when(
       mockFindNodeClient
-        .requestNodeContacts(ArgumentMatchers.any[Contact]())
+        .requestContacts(ArgumentMatchers.any[Contact]())
     ).thenReturn(IO.pure(List.empty[Contact]))
 
     val result =

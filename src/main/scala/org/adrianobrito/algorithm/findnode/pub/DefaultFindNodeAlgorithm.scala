@@ -1,4 +1,4 @@
-package org.adrianobrito.algorithms.findnode
+package org.adrianobrito.algorithms.findnode.pub
 
 import org.adrianobrito.model.RoutingTable
 import org.adrianobrito.model.NodeId
@@ -7,6 +7,9 @@ import cats.effect.kernel.Async
 import cats.implicits._
 import cats.Applicative
 import scala.annotation.tailrec
+
+import org.adrianobrito.algorithms.findnode.FindNodeClient
+import org.adrianobrito.algorithms.findnode.pub.FindNodeAlgorithm
 
 case class DefaultFindNodeAlgorithm[F[_]: Async: Applicative](
   findNodeClient: FindNodeClient[F]
@@ -71,7 +74,7 @@ case class DefaultFindNodeAlgorithm[F[_]: Async: Applicative](
     nodeContacts: Set[Contact]
   ): F[Set[Contact]] =
     nodeContacts.toList
-      .map(contact => findNodeClient.requestNodeContacts(contact))
+      .map(contact => findNodeClient.requestContacts(contact))
       .flatTraverse(a => a)
       .flatMap(a => Async[F].pure((a.toSet[Contact])))
 
