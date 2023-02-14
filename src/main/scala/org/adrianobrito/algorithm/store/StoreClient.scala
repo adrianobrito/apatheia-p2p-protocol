@@ -1,4 +1,4 @@
-package org.adrianobrito.algorithms.store
+package org.adrianobrito.algorithm.store
 
 import org.adrianobrito.model.StoreRequest
 import org.adrianobrito.error.StoreRequestError

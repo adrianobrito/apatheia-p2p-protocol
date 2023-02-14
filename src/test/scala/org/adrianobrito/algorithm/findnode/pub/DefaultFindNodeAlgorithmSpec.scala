@@ -1,11 +1,8 @@
-package org.adrianobrito.algorithm.findnode
+package org.adrianobrito.algorithm.findnode.pub
 
-import org.mockito.Mockito._
-import org.adrianobrito.algorithms.findnode.FindNodeClient
 import org.adrianobrito.model.{NodeId, Contact, RoutingTable}
 import cats.effect.IO
 import cats.Applicative
-import org.adrianobrito.algorithms.findnode.DefaultFindNodeAlgorithm
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import org.scalatestplus.mockito.MockitoSugar
@@ -13,6 +10,8 @@ import org.mockito.Mockito._
 
 import cats.effect.unsafe.implicits.global
 import org.mockito.ArgumentMatchers
+import org.adrianobrito.algorithms.findnode.pub.DefaultFindNodeAlgorithm
+import org.adrianobrito.algorithms.findnode.FindNodeClient
 
 class DefaultFindNodeAlgorithmSpec extends AnyFlatSpec with Matchers with MockitoSugar {
 
