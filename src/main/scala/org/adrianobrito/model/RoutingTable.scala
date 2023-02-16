@@ -1,6 +1,6 @@
 package org.adrianobrito.model
 
-final case class RoutingTable(
+case class RoutingTable(
   nodeId: NodeId,
   contacts: List[Contact],
   k: Int = 20
