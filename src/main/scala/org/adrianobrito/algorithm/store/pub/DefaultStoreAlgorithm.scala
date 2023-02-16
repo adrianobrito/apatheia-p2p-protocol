@@ -38,8 +38,6 @@ class DefaultStoreAlgorithm[F[_]: Async](
     val successfulResponsesContacts = toContacts(successfulResponses)
     val failedResponsesContacts     = toContacts(failedResponses)
 
-    successfulResponses.flatMap(responses => Async[F].pure(responses.flatMap(_.toList).toSet))
-
     failedResponses.flatMap { fResponses =>
       if (fResponses.size > threshold.value && iterations > 0) {
         store(key, data)(iterations - 1)
