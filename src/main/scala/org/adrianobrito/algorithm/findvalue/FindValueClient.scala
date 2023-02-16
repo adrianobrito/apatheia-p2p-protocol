@@ -1,11 +1,11 @@
 package org.adrianobrito.algorithm.findvalue
 
-import org.adrianobrito.model.NodeId
 import org.adrianobrito.model.FindValuePayload
 import org.adrianobrito.error.FindValueError
+import org.adrianobrito.model.Contact
 
 trait FindValueClient[F[_]] {
-  def sendFindNode(targetId: NodeId): F[FindValueClient.FindValueResponse]
+  def sendFindNode(targetId: Contact): F[FindValueClient.FindValueResponse]
 }
 
 object FindValueClient {

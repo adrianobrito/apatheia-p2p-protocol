@@ -18,7 +18,6 @@ case class DefaultFindValueAlgorithm[F[_]: Async](
 
   private def sendFindValueRequest(targetId: NodeId): F[List[FindValueResponse]] = routingTable
     .findClosestContacts(targetId = targetId)
-    .map(_.nodeId)
     .traverse(findValueClient.sendFindNode)
 
   private def splitResponsesByStatus(
