@@ -5,7 +5,7 @@ import org.adrianobrito.error.FindValueError
 import org.adrianobrito.model.Contact
 
 trait FindValueClient[F[_]] {
-  def sendFindNode(targetId: Contact): F[FindValueClient.FindValueResponse]
+  def sendFindValue(targetId: Contact): F[FindValueClient.FindValueResponse]
 }
 
 object FindValueClient {

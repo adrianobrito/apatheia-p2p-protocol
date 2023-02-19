@@ -1,4 +1,4 @@
-package org.adrianobrito.algorithms.findnode
+package org.adrianobrito.algorithm.findnode
 
 import org.adrianobrito.model.Contact
 

@@ -10,7 +10,7 @@ import org.mockito.Mockito._
 
 import cats.effect.unsafe.implicits.global
 import org.mockito.ArgumentMatchers
-import org.adrianobrito.algorithms.findnode.FindNodeClient
+import org.adrianobrito.algorithm.findnode.FindNodeClient
 
 class DefaultFindNodeAlgorithmSpec extends AnyFlatSpec with Matchers with MockitoSugar {
 
