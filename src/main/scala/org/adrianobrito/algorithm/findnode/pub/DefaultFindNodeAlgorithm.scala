@@ -7,8 +7,9 @@ import cats.effect.kernel.Async
 import cats.implicits._
 import cats.Applicative
 import scala.annotation.tailrec
-import org.adrianobrito.algorithms.findnode.FindNodeClient
 import org.adrianobrito.algorithms.findnode.pub.FindNodeAlgorithm
+
+import org.adrianobrito.algorithm.findnode.FindNodeClient
 
 case class DefaultFindNodeAlgorithm[F[_]: Async: Applicative](
   findNodeClient: FindNodeClient[F]

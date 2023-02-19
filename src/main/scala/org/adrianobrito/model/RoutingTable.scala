@@ -1,9 +1,9 @@
 package org.adrianobrito.model
 
 case class RoutingTable(
-    nodeId: NodeId,
-    contacts: List[Contact],
-    k: Int = 20
+  nodeId: NodeId,
+  contacts: List[Contact],
+  k: Int = 20
 ) {
 
   def addContact(contact: Contact): RoutingTable =
