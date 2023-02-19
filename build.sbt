@@ -21,9 +21,9 @@ lazy val root = (project in file(".")).settings(
 )
 
 // publish to github packages settings
-publishTo := Some("GitHub Adriano Brito's Apache Maven Packages" at "https://maven.pkg.github.com/adrianobrito/apatheia-p2p-protocol")
-publishMavenStyle := true
-credentials += Credentials(
+ThisBuild / publishTo := Some("GitHub Adriano Brito's Apache Maven Packages" at "https://maven.pkg.github.com/adrianobrito/apatheia-p2p-protocol")
+ThisBuild / publishMavenStyle := true
+ThisBuild / credentials += Credentials(
   "GitHub Package Registry",
   "maven.pkg.github.com",
   "adrianobrito",
