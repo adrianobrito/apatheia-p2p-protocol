@@ -1,4 +1,4 @@
-package org.adrianobrito.validation
+package org.apatheia.validation
 
 object ValidationOps {
   implicit class ValidationOpsClass[A: Valid](a: A) {

@@ -1,6 +1,6 @@
-package org.adrianobrito.algorithm.findnode
+package org.apatheia.algorithm.findnode
 
-import org.adrianobrito.model.Contact
+import org.apatheia.model.Contact
 
 trait FindNodeClient[F[_]] {
   def requestContacts(nodeContact: Contact): F[List[Contact]]

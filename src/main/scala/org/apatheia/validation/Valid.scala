@@ -1,6 +1,6 @@
-package org.adrianobrito.validation
+package org.apatheia.validation
 
-import org.adrianobrito.error
+import org.apatheia.error
 
 trait Valid[T] {
   def validate(t: T): Either[error.Error, T]

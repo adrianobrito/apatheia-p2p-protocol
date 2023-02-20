@@ -1,4 +1,4 @@
-package org.adrianobrito.model
+package org.apatheia.model
 
 case class RoutingTable(
   nodeId: NodeId,

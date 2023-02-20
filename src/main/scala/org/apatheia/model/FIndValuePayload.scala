@@ -1,5 +1,5 @@
-package org.adrianobrito.model
+package org.apatheia.model
 
-import org.adrianobrito.model.Contact
+import org.apatheia.model.Contact
 
 final case class FindValuePayload(contact: Contact, value: Option[Array[Byte]])

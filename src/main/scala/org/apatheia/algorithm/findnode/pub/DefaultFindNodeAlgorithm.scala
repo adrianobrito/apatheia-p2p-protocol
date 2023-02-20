@@ -1,15 +1,15 @@
-package org.adrianobrito.algorithm.findnode.pub
+package org.apatheia.algorithm.findnode.pub
 
-import org.adrianobrito.model.RoutingTable
-import org.adrianobrito.model.NodeId
-import org.adrianobrito.model.Contact
+import org.apatheia.model.RoutingTable
+import org.apatheia.model.NodeId
+import org.apatheia.model.Contact
 import cats.effect.kernel.Async
 import cats.implicits._
 import cats.Applicative
 import scala.annotation.tailrec
-import org.adrianobrito.algorithms.findnode.pub.FindNodeAlgorithm
+import org.apatheia.algorithm.findnode.pub.FindNodeAlgorithm
 
-import org.adrianobrito.algorithm.findnode.FindNodeClient
+import org.apatheia.algorithm.findnode.FindNodeClient
 
 case class DefaultFindNodeAlgorithm[F[_]: Async: Applicative](
   findNodeClient: FindNodeClient[F]

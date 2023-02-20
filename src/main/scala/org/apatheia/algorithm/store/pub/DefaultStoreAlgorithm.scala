@@ -1,14 +1,14 @@
-package org.adrianobrito.algorithm.store.pub
+package org.apatheia.algorithm.store.pub
 
 import cats.effect.kernel.Async
-import org.adrianobrito.model.StoreRequest
-import org.adrianobrito.model.RoutingTable
-import org.adrianobrito.algorithm.store.StoreClient
-import org.adrianobrito.algorithm.store.StoreClient.StoreResponse
-import org.adrianobrito.model.NodeId
+import org.apatheia.model.StoreRequest
+import org.apatheia.model.RoutingTable
+import org.apatheia.algorithm.store.StoreClient
+import org.apatheia.algorithm.store.StoreClient.StoreResponse
+import org.apatheia.model.NodeId
 import cats.implicits._
-import org.adrianobrito.model.StoreSuccessThreshold
-import org.adrianobrito.model.Contact
+import org.apatheia.model.StoreSuccessThreshold
+import org.apatheia.model.Contact
 
 class DefaultStoreAlgorithm[F[_]: Async](
   routingTable: RoutingTable,

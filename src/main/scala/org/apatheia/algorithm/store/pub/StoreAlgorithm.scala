@@ -1,9 +1,9 @@
-package org.adrianobrito.algorithm.store.pub
+package org.apatheia.algorithm.store.pub
 
-import org.adrianobrito.model.StoreRequest
-import org.adrianobrito.error.StoreRequestError
-import org.adrianobrito.model.Contact
-import org.adrianobrito.model.NodeId
+import org.apatheia.model.StoreRequest
+import org.apatheia.error.StoreRequestError
+import org.apatheia.model.Contact
+import org.apatheia.model.NodeId
 
 trait StoreAlgorithm[F[_]] {
 

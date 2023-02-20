@@ -1,6 +1,5 @@
-package org.adrianobrito.algorithm.findnode.pub
+package org.apatheia.algorithm.findnode.pub
 
-import org.adrianobrito.model.{NodeId, Contact, RoutingTable}
 import cats.effect.IO
 import cats.Applicative
 import org.scalatest.flatspec.AnyFlatSpec
@@ -10,7 +9,10 @@ import org.mockito.Mockito._
 
 import cats.effect.unsafe.implicits.global
 import org.mockito.ArgumentMatchers
-import org.adrianobrito.algorithm.findnode.FindNodeClient
+import org.apatheia.algorithm.findnode.FindNodeClient
+import org.apatheia.model.Contact
+import org.apatheia.model.NodeId
+import org.apatheia.model.RoutingTable
 
 class DefaultFindNodeAlgorithmSpec extends AnyFlatSpec with Matchers with MockitoSugar {
 

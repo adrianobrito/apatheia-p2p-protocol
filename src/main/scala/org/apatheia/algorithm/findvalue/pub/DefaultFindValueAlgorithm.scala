@@ -1,14 +1,14 @@
-package org.adrianobrito.algorithm.findvalue.pub
+package org.apatheia.algorithm.findvalue.pub
 
 import cats.effect.kernel.Async
-import org.adrianobrito.model.NodeId
-import org.adrianobrito.model.RoutingTable
+import org.apatheia.model.NodeId
+import org.apatheia.model.RoutingTable
 
 import cats.implicits._
-import org.adrianobrito.algorithm.findvalue.FindValueClient
-import org.adrianobrito.algorithm.findvalue.FindValueClient.FindValueResponse
-import org.adrianobrito.algorithm.findvalue.pub.FindValueAlgorithm.FindValueResult
-import org.adrianobrito.error.FindValueError
+import org.apatheia.algorithm.findvalue.FindValueClient
+import org.apatheia.algorithm.findvalue.FindValueClient.FindValueResponse
+import org.apatheia.algorithm.findvalue.pub.FindValueAlgorithm.FindValueResult
+import org.apatheia.error.FindValueError
 
 case class DefaultFindValueAlgorithm[F[_]: Async](
   routingTable: RoutingTable,

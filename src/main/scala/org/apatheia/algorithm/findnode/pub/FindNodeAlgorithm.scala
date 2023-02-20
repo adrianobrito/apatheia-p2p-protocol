@@ -1,8 +1,8 @@
-package org.adrianobrito.algorithms.findnode.pub
+package org.apatheia.algorithm.findnode.pub
 
-import org.adrianobrito.model.RoutingTable
-import org.adrianobrito.model.NodeId
-import org.adrianobrito.model.Contact
+import org.apatheia.model.RoutingTable
+import org.apatheia.model.NodeId
+import org.apatheia.model.Contact
 
 trait FindNodeAlgorithm[F[_]] {
 

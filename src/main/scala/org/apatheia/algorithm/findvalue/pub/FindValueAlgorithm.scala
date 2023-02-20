@@ -1,8 +1,8 @@
-package org.adrianobrito.algorithm.findvalue.pub
+package org.apatheia.algorithm.findvalue.pub
 
-import org.adrianobrito.model.NodeId
-import org.adrianobrito.model.FindValuePayload
-import org.adrianobrito.error.FindValueError
+import org.apatheia.model.NodeId
+import org.apatheia.model.FindValuePayload
+import org.apatheia.error.FindValueError
 
 trait FindValueAlgorithm[F[_]] {
 

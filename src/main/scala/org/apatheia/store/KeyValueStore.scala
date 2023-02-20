@@ -1,4 +1,4 @@
-package org.adrianobrito.store
+package org.apatheia.store
 
 trait KeyValueStore[K, V] {
   def put(key: K, value: V): KeyValueStore[K, V]

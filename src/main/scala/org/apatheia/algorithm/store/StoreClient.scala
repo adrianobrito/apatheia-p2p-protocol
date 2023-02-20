@@ -1,8 +1,8 @@
-package org.adrianobrito.algorithm.store
+package org.apatheia.algorithm.store
 
-import org.adrianobrito.model.StoreRequest
-import org.adrianobrito.error.StoreRequestError
-import org.adrianobrito.model.Contact
+import org.apatheia.model.StoreRequest
+import org.apatheia.error.StoreRequestError
+import org.apatheia.model.Contact
 
 trait StoreClient[F[_]] {
   def sendStoreRequest(storeRequest: StoreRequest): F[StoreClient.StoreResponse]

@@ -4,7 +4,7 @@ import org.scalatest._
 import scala.collection.immutable.HashMap
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
-import org.adrianobrito.model.NodeId
+import org.apatheia.model.NodeId
 
 class ApatheiaKeyValueStoreSpec extends AnyFlatSpec with Matchers {
   behavior of "ApatheiaKeyValueStore"

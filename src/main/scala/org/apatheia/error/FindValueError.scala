@@ -1,5 +1,5 @@
-package org.adrianobrito.error
+package org.apatheia.error
 
-import org.adrianobrito.model.NodeId
+import org.apatheia.model.NodeId
 
 final case class FindValueError(message: String) extends Error

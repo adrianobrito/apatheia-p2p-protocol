@@ -1,16 +1,14 @@
-package org.adrianobrito.validation
+package org.apatheia.validation
 
-import org.adrianobrito.validation.Valid
-import org.adrianobrito.model.NodeId
-import org.adrianobrito.error.NodeIdErrors
-import org.adrianobrito.error.NodeIdError
-import org.adrianobrito.error
+import org.apatheia.validation.Valid
+import org.apatheia.model.NodeId
+import org.apatheia.error.NodeIdErrors
+import org.apatheia.error.NodeIdError
+import org.apatheia.error
 
 class NodeIdValidation extends Valid[NodeId] {
 
-  override def validate(t: NodeId): Either[error.Error, NodeId] = if (
-    t.value.bitCount <= 160
-  ) {
+  override def validate(t: NodeId): Either[error.Error, NodeId] = if (t.value.bitCount <= 160) {
     Right(t)
   } else {
     Left(NodeIdErrors.INVALID_SIZE)

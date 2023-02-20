@@ -1,4 +1,4 @@
-package org.adrianobrito.model
+package org.apatheia.model
 
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers

@@ -1,4 +1,4 @@
-package org.adrianobrito.error
+package org.apatheia.error
 
 trait Error {
   def message: String

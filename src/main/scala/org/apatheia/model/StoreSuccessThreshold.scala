@@ -1,3 +1,3 @@
-package org.adrianobrito.model
+package org.apatheia.model
 
 final case class StoreSuccessThreshold(value: Int) extends AnyVal

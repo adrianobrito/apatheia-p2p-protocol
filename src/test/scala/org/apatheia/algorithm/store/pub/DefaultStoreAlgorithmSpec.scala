@@ -1,6 +1,6 @@
-package org.adrianobrito.algorithm.store.pub
+package org.apatheia.algorithm.store.pub
 
-import org.adrianobrito.model.{Contact, NodeId, RoutingTable, StoreRequest, StoreSuccessThreshold}
+import org.apatheia.model.{Contact, NodeId, RoutingTable, StoreRequest, StoreSuccessThreshold}
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.concurrent.ScalaFutures
@@ -11,8 +11,8 @@ import org.mockito.Mockito._
 import cats.effect.unsafe.implicits.global
 import org.scalatestplus.mockito.MockitoSugar
 import org.mockito.ArgumentMatchers
-import org.adrianobrito.error.StoreRequestError
-import org.adrianobrito.algorithm.store.StoreClient
+import org.apatheia.error.StoreRequestError
+import org.apatheia.algorithm.store.StoreClient
 
 class DefaultStoreAlgorithmSpec extends AnyFreeSpec with Matchers with ScalaFutures with MockitoSugar {
 
