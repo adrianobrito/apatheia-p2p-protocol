@@ -20,7 +20,7 @@ Apathea is an implementation of the Kademlia Distributed Hash Table (DHT) protoc
 ## Run tests
 
 ```shell
-sbt test
+sbt clean test
 ```
 
 ## Contributing
