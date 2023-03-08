@@ -19,13 +19,13 @@ class DefaultFindValueAlgorithmSpec extends AnyWordSpec with Matchers with Mocki
 
   "DefaultFindValueAlgorithm" should {
     val nodeId  = NodeId(123)
-    val contact = Contact(nodeId, "1.0.0.99", 1110)
+    val contact = Contact(nodeId, 1110, "1.0.0.99")
     val contacts =
       List(
         contact,
-        Contact(NodeId(2), "1.0.0.99", 1111),
-        Contact(NodeId(1), "1.0.0.99", 1112),
-        Contact(NodeId(0), "1.0.0.99", 1113)
+        Contact(NodeId(2), 1111, "1.0.0.99"),
+        Contact(NodeId(1), 1112, "1.0.0.99"),
+        Contact(NodeId(0), 1113, "1.0.0.99")
       )
     val routingTable = RoutingTable(nodeId = nodeId, contacts = contacts)
     val data         = Array(1.toByte, 0.toByte, 1.toByte, 0.toByte)

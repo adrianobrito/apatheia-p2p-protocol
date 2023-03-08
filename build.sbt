@@ -1,5 +1,5 @@
 ThisBuild / organization := "org.apatheia"
-ThisBuild / scalaVersion := "2.13.5"
+ThisBuild / scalaVersion := "2.13.10"
 ThisBuild / version      := "0.0.3-alpha"
 
 lazy val root = (project in file(".")).settings(

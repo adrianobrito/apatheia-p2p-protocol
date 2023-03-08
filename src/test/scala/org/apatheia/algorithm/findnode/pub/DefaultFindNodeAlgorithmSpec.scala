@@ -63,7 +63,7 @@ class DefaultFindNodeAlgorithmSpec extends AnyFlatSpec with Matchers with Mockit
     val findNodeAlgorithm = DefaultFindNodeAlgorithm[IO](findNodeClient)
 
     when(routingTable.findClosestContacts(NodeId(1)))
-      .thenReturn(List(Contact(NodeId(2), "localhost", 12345)))
+      .thenReturn(List(Contact(NodeId(2), 12345, "localhost")))
 
     findNodeAlgorithm.findNode(routingTable, NodeId(1), 1)
     verify(routingTable).findClosestContacts(NodeId(1))
@@ -76,26 +76,26 @@ class DefaultFindNodeAlgorithmSpec extends AnyFlatSpec with Matchers with Mockit
 
     when(routingTable.findClosestContacts(NodeId(1))).thenReturn(
       List(
-        Contact(NodeId(2), "localhost", 12345),
-        Contact(NodeId(3), "localhost", 12335)
+        Contact(NodeId(2), 12345, "localhost"),
+        Contact(NodeId(3), 12335, "localhost")
       )
     )
 
     when(
-      findNodeClient.requestContacts(Contact(NodeId(2), "localhost", 12345))
-    ).thenReturn(IO(List(Contact(NodeId(4), "localhost", 12345))))
+      findNodeClient.requestContacts(Contact(NodeId(2), 12345, "localhost"))
+    ).thenReturn(IO(List(Contact(NodeId(4), 12345, "localhost"))))
 
     when(
-      findNodeClient.requestContacts(Contact(NodeId(3), "localhost", 12335))
-    ).thenReturn(IO(List(Contact(NodeId(5), "localhost", 12345))))
+      findNodeClient.requestContacts(Contact(NodeId(3), 12335, "localhost"))
+    ).thenReturn(IO(List(Contact(NodeId(5), 12345, "localhost"))))
 
     findNodeAlgorithm.findNode(routingTable, NodeId(1), 1).unsafeRunSync()
 
     verify(findNodeClient).requestContacts(
-      Contact(NodeId(2), "localhost", 12345)
+      Contact(NodeId(2), 12345, "localhost")
     )
     verify(findNodeClient).requestContacts(
-      Contact(NodeId(3), "localhost", 12335)
+      Contact(NodeId(3), 12335, "localhost")
     )
   }
 
@@ -105,7 +105,7 @@ class DefaultFindNodeAlgorithmSpec extends AnyFlatSpec with Matchers with Mockit
     val routingTable       = RoutingTable(nodeId = NodeId(1), contacts = List.empty)
     val maxIterations      = 3
     val targetNodeId       = NodeId(2)
-    val targetContact      = Contact(targetNodeId, "localhost", 12345)
+    val targetContact      = Contact(targetNodeId, 12345, "localhost")
 
     when(
       mockFindNodeClient
