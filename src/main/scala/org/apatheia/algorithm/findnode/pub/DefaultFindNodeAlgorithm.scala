@@ -53,6 +53,7 @@ case class DefaultFindNodeAlgorithm[F[_]: Async: Applicative](
             closestContacts = closestContacts,
             targetId = targetId
           )
+          // TODO update local routing table with response
         } else {
           Async[F].pure(foundContacts.toSet)
         }
