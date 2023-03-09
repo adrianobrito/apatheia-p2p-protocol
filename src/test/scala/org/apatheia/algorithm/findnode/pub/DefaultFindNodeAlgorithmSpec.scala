@@ -18,7 +18,7 @@ class DefaultFindNodeAlgorithmSpec extends AnyFlatSpec with Matchers with Mockit
 
   def mockFindNodeClient(expectedContacts: Set[Contact]) =
     new FindNodeClient[IO] {
-      override def requestContacts(contact: Contact): IO[List[Contact]] =
+      override def requestContacts(contact: Contact, target: NodeId): IO[List[Contact]] =
         IO.pure(expectedContacts.toList)
     }
 
@@ -49,7 +49,7 @@ class DefaultFindNodeAlgorithmSpec extends AnyFlatSpec with Matchers with Mockit
     val result = findNodeAlgorithm
       .findNode(
         routingTable = routingTable,
-        targetId = nodeId1,
+        target = nodeId1,
         maxIterations = 1
       )
       .unsafeRunSync()
@@ -73,8 +73,9 @@ class DefaultFindNodeAlgorithmSpec extends AnyFlatSpec with Matchers with Mockit
     val routingTable      = mock[RoutingTable]
     val findNodeClient    = mock[FindNodeClient[IO]]
     val findNodeAlgorithm = DefaultFindNodeAlgorithm[IO](findNodeClient)
+    val target            = NodeId(1)
 
-    when(routingTable.findClosestContacts(NodeId(1))).thenReturn(
+    when(routingTable.findClosestContacts(target)).thenReturn(
       List(
         Contact(NodeId(2), 12345, "localhost"),
         Contact(NodeId(3), 12335, "localhost")
@@ -82,20 +83,22 @@ class DefaultFindNodeAlgorithmSpec extends AnyFlatSpec with Matchers with Mockit
     )
 
     when(
-      findNodeClient.requestContacts(Contact(NodeId(2), 12345, "localhost"))
+      findNodeClient.requestContacts(Contact(NodeId(2), 12345, "localhost"), target)
     ).thenReturn(IO(List(Contact(NodeId(4), 12345, "localhost"))))
 
     when(
-      findNodeClient.requestContacts(Contact(NodeId(3), 12335, "localhost"))
+      findNodeClient.requestContacts(Contact(NodeId(3), 12335, "localhost"), target)
     ).thenReturn(IO(List(Contact(NodeId(5), 12345, "localhost"))))
 
     findNodeAlgorithm.findNode(routingTable, NodeId(1), 1).unsafeRunSync()
 
     verify(findNodeClient).requestContacts(
-      Contact(NodeId(2), 12345, "localhost")
+      Contact(NodeId(2), 12345, "localhost"),
+      target
     )
     verify(findNodeClient).requestContacts(
-      Contact(NodeId(3), 12335, "localhost")
+      Contact(NodeId(3), 12335, "localhost"),
+      target
     )
   }
 
@@ -109,12 +112,12 @@ class DefaultFindNodeAlgorithmSpec extends AnyFlatSpec with Matchers with Mockit
 
     when(
       mockFindNodeClient
-        .requestContacts(ArgumentMatchers.any[Contact]())
+        .requestContacts(ArgumentMatchers.any[Contact](), ArgumentMatchers.eq[NodeId](targetNodeId))
     ).thenReturn(IO.pure(List.empty[Contact]))
 
     val result =
       algorithm
-        .findNode(targetId = targetNodeId, routingTable = routingTable, maxIterations = maxIterations)
+        .findNode(target = targetNodeId, routingTable = routingTable, maxIterations = maxIterations)
         .unsafeRunSync()
 
     result shouldBe Set.empty
