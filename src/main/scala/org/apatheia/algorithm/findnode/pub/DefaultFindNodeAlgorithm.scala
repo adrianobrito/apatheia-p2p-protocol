@@ -17,15 +17,15 @@ case class DefaultFindNodeAlgorithm[F[_]: Async: Applicative](
 
   override def findNode(
     routingTable: RoutingTable,
-    targetId: NodeId,
+    target: NodeId,
     maxIterations: Int
   ): F[Set[Contact]] = {
-    val closestContacts = routingTable.findClosestContacts(targetId)
+    val closestContacts = routingTable.findClosestContacts(target)
     retryFindNodeRequest(
       iteration = maxIterations,
       routingTable = routingTable,
       closestContacts = closestContacts,
-      targetId = targetId
+      target = target
     )
   }
 
@@ -33,17 +33,17 @@ case class DefaultFindNodeAlgorithm[F[_]: Async: Applicative](
     iteration: Int,
     routingTable: RoutingTable,
     closestContacts: List[Contact],
-    targetId: NodeId
+    target: NodeId
   ): F[Set[Contact]] =
     if (iteration == 0) {
       Async[F].pure(Set.empty)
     } else {
       (for {
-        contacts        <- filterFromTargetNode(closestContacts, targetId)
-        requestContacts <- sendFindNodeRequests(contacts)
+        contacts        <- filterFromTargetNode(closestContacts, target)
+        requestContacts <- sendFindNodeRequests(contacts, target)
       } yield (requestContacts.toList
         .sortBy(
-          _.nodeId.distance(targetId)
+          _.nodeId.distance(target)
         )
         .take(routingTable.k))).flatMap { foundContacts =>
         if (foundContacts.isEmpty) {
@@ -51,7 +51,7 @@ case class DefaultFindNodeAlgorithm[F[_]: Async: Applicative](
             iteration = iteration - 1,
             routingTable = routingTable,
             closestContacts = closestContacts,
-            targetId = targetId
+            target = target
           )
           // TODO update local routing table with response
         } else {
@@ -62,20 +62,21 @@ case class DefaultFindNodeAlgorithm[F[_]: Async: Applicative](
 
   private def filterFromTargetNode(
     closestContacts: List[Contact],
-    targetId: NodeId
+    target: NodeId
   ): F[Set[Contact]] =
     Async[F]
       .pure(
         closestContacts
-          .filter(_.nodeId.value != targetId.value)
+          .filter(_.nodeId.value != target.value)
           .toSet[Contact]
       )
 
   private def sendFindNodeRequests(
-    nodeContacts: Set[Contact]
+    nodeContacts: Set[Contact],
+    target: NodeId
   ): F[Set[Contact]] =
     nodeContacts.toList
-      .map(contact => findNodeClient.requestContacts(contact))
+      .map(contact => findNodeClient.requestContacts(contact, target))
       .flatTraverse(a => a)
       .flatMap(a => Async[F].pure((a.toSet[Contact])))
 
