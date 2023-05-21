@@ -3,15 +3,15 @@ package org.apatheia.store
 import org.apatheia.model.NodeId
 import scala.collection.immutable.HashMap
 
-case class ApatheiaKeyValueStore[T](map: HashMap[T, Array[Byte]]) extends KeyValueStore[T, Array[Byte]] {
+case class ApatheiaKeyValueStore[T, X](map: HashMap[T, X]) extends KeyValueStore[T, X] {
 
-  override def get(key: T): Option[Array[Byte]] = map.get(key)
-  override def remove(key: T): KeyValueStore[T, Array[Byte]] =
+  override def get(key: T): Option[X] = map.get(key)
+  override def remove(key: T): KeyValueStore[T, X] =
     ApatheiaKeyValueStore(map.removed(key))
   override def put(
     key: T,
-    value: Array[Byte]
-  ): KeyValueStore[T, Array[Byte]] = ApatheiaKeyValueStore(
+    value: X
+  ): KeyValueStore[T, X] = ApatheiaKeyValueStore(
     map + (key -> value)
   )
 
