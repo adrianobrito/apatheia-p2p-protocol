@@ -13,14 +13,14 @@ class ApatheiaKeyValueStoreSpec extends AnyFlatSpec with Matchers {
     val nodeId = NodeId(12345)
     val value  = Array[Byte](1, 2, 3)
     val map    = HashMap[NodeId, Array[Byte]](nodeId -> value)
-    val store  = ApatheiaKeyValueStore(map)
+    val store  = ApatheiaKeyValueStore[NodeId](map)
 
     store.get(nodeId) should be(Some(value))
   }
 
   it should "return None for a key that doesn't exist" in {
     val nodeId = NodeId(12345)
-    val store  = ApatheiaKeyValueStore(HashMap[NodeId, Array[Byte]]())
+    val store  = ApatheiaKeyValueStore[NodeId](HashMap[NodeId, Array[Byte]]())
 
     store.get(nodeId) should be(None)
   }
@@ -29,7 +29,7 @@ class ApatheiaKeyValueStoreSpec extends AnyFlatSpec with Matchers {
     val nodeId = NodeId(12345)
     val value  = Array[Byte](1, 2, 3)
     val map    = HashMap[NodeId, Array[Byte]](nodeId -> value)
-    val store  = ApatheiaKeyValueStore(map)
+    val store  = ApatheiaKeyValueStore[NodeId](map)
 
     store.remove(nodeId).get(nodeId) should be(None)
   }
@@ -37,7 +37,7 @@ class ApatheiaKeyValueStoreSpec extends AnyFlatSpec with Matchers {
   it should "put a new key-value pair in the store" in {
     val nodeId = NodeId(12345)
     val value  = Array[Byte](1, 2, 3)
-    val store  = ApatheiaKeyValueStore(HashMap[NodeId, Array[Byte]]())
+    val store  = ApatheiaKeyValueStore[NodeId](HashMap[NodeId, Array[Byte]]())
 
     store.put(nodeId, value).get(nodeId) should be(Some(value))
   }
@@ -48,7 +48,7 @@ class ApatheiaKeyValueStoreSpec extends AnyFlatSpec with Matchers {
     val nodeId2 = NodeId(67890)
     val value2  = Array[Byte](4, 5, 6)
     val map     = HashMap[NodeId, Array[Byte]](nodeId1 -> value1, nodeId2 -> value2)
-    val store   = ApatheiaKeyValueStore(map)
+    val store   = ApatheiaKeyValueStore[NodeId](map)
 
     store.iterator.toSet should be(Set(nodeId1, nodeId2))
   }
