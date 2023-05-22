@@ -4,24 +4,28 @@ import java.nio.ByteBuffer
 import org.apatheia.error.PackageDataParsingError
 import scala.util.Try
 import cats.implicits._
-import org.apatheia.validation.NodeIdValidation._
-import org.apatheia.validation.ValidationOps._
+import java.nio.charset.Charset
+import java.nio.charset.StandardCharsets
+import javax.print.DocFlavor.CHAR_ARRAY
 
 final case class NodeId(val value: BigInt) extends PackageData {
 
   def distance(other: NodeId): BigInt = (this.value ^ other.value).abs
 
-  override def toByteArray: Array[Byte] = ByteBuffer.allocate(NodeId.MAX_BYTESIZE).putLong(value.toLong).array()
+  override def toByteArray: Array[Byte] =
+    ByteBuffer.allocate(NodeId.BYTESIZE).put(value.toString().getBytes(NodeId.CHARSET)).array()
 }
 
 object NodeId extends PackageDataParser[NodeId] {
-  val MAX_BYTESIZE: Int = 160
 
-  override def parse(byteArray: Array[Byte]): Either[PackageDataParsingError, NodeId] = Try(
-    BigInt.apply(byteArray)
+  val CHARSET: Charset = StandardCharsets.UTF_8
+
+  val BYTESIZE: Int = 20
+
+  override def parse(allocatedByteArray: Array[Byte]): Either[PackageDataParsingError, NodeId] = Try(
+    BigInt(new String(allocatedByteArray, CHARSET).trim())
   ).toEither
     .flatMap(bigIntValue => Right(NodeId(bigIntValue)))
-    .flatMap(_.validate)
-    .leftFlatMap(_ => Left(PackageDataParsingError("Unexpected error while parsing a byte array into a NodeId")))
+    .leftFlatMap(e => Left(PackageDataParsingError(s"Unexpected error while parsing a byte array into a NodeId: ${e}")))
 
 }

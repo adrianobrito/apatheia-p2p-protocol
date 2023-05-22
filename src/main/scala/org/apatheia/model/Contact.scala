@@ -15,13 +15,13 @@ object Contact extends PackageDataParser[Contact] {
   private val portByteSize: Int = 8
 
   override def parse(byteArray: Array[Byte]): Either[PackageDataParsingError, Contact] = NodeId
-    .parse(byteArray.take(NodeId.MAX_BYTESIZE))
+    .parse(byteArray.take(NodeId.BYTESIZE))
     .flatMap(nodeId =>
       Right(
         Contact(
           nodeId = nodeId,
-          port = ByteBuffer.wrap(byteArray.slice(NodeId.MAX_BYTESIZE, NodeId.MAX_BYTESIZE + portByteSize)).getInt(),
-          ip = new String(byteArray.drop(NodeId.MAX_BYTESIZE + portByteSize), StandardCharsets.UTF_8)
+          port = ByteBuffer.wrap(byteArray.slice(NodeId.BYTESIZE, NodeId.BYTESIZE + portByteSize)).getInt(),
+          ip = new String(byteArray.drop(NodeId.BYTESIZE + portByteSize), StandardCharsets.UTF_8)
         )
       )
     )
