@@ -1,9 +1,14 @@
 package org.apatheia.model
 
+import cats.instances.long
+import org.apatheia.error.PackageDataParsingError
+import org.scalatest.EitherValues
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
-import org.scalatest.EitherValues
-import org.apatheia.error.PackageDataParsingError
+
+import java.math.BigInteger
+import java.nio.ByteBuffer
+import java.nio.charset.StandardCharsets
 
 class NodeIdSpec extends AnyFlatSpec with Matchers with EitherValues {
 
@@ -25,17 +30,25 @@ class NodeIdSpec extends AnyFlatSpec with Matchers with EitherValues {
     distance shouldBe (BigInt(60910))
   }
 
-  it should "parse a byte array value" in {
-    val byteArray = Array.fill[Byte](100)(0)
-    val nodeId    = NodeId.parse(byteArray).value
+  it should "parse a byte array BigInt value into a NodeId" in {
+    val nodeId       = NodeId(1)
+    val byteArray    = nodeId.toByteArray
+    val parsedNodeId = NodeId.parse(byteArray)
 
-    nodeId.value shouldBe BigInt(0)
+    parsedNodeId shouldBe Right(nodeId)
+    byteArray.size shouldBe NodeId.MAX_BYTESIZE
   }
 
   it should "not parse an invalid byte array value" in {
-    val byteArray = Array.fill[Byte](10000)(1)
-    val nodeId    = NodeId.parse(byteArray)
-    nodeId shouldBe Left(PackageDataParsingError("Unexpected error while parsing a byte array into a NodeId"))
+    val byteArray = ByteBuffer.allocate(3).put("A".getBytes(NodeId.CHARSET)).array()
+
+    val nodeId = NodeId.parse(byteArray)
+
+    nodeId shouldBe Left(
+      PackageDataParsingError(
+        "Unexpected error while parsing a byte array into a NodeId: java.lang.NumberFormatException: For input string: \"A\""
+      )
+    )
   }
 
 }
