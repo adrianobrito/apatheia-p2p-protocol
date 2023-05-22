@@ -8,7 +8,7 @@ import org.apatheia.error
 
 class NodeIdValidation extends Valid[NodeId] {
 
-  override def validate(t: NodeId): Either[error.Error, NodeId] = if (t.value.bitCount <= NodeId.MAX_BYTESIZE) {
+  override def validate(t: NodeId): Either[error.Error, NodeId] = if (t.toByteArray.size <= NodeId.BYTESIZE) {
     Right(t)
   } else {
     Left(NodeIdErrors.INVALID_SIZE)

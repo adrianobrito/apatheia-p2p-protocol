@@ -36,7 +36,7 @@ class NodeIdSpec extends AnyFlatSpec with Matchers with EitherValues {
     val parsedNodeId = NodeId.parse(byteArray)
 
     parsedNodeId shouldBe Right(nodeId)
-    byteArray.size shouldBe NodeId.MAX_BYTESIZE
+    byteArray.size shouldBe NodeId.BYTESIZE
   }
 
   it should "not parse an invalid byte array value" in {

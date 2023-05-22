@@ -13,14 +13,14 @@ final case class NodeId(val value: BigInt) extends PackageData {
   def distance(other: NodeId): BigInt = (this.value ^ other.value).abs
 
   override def toByteArray: Array[Byte] =
-    ByteBuffer.allocate(NodeId.MAX_BYTESIZE).put(value.toString().getBytes(NodeId.CHARSET)).array()
+    ByteBuffer.allocate(NodeId.BYTESIZE).put(value.toString().getBytes(NodeId.CHARSET)).array()
 }
 
 object NodeId extends PackageDataParser[NodeId] {
 
-  val CHARSET: Charset = Charset.defaultCharset()
+  val CHARSET: Charset = StandardCharsets.UTF_8
 
-  val MAX_BYTESIZE: Int = 20
+  val BYTESIZE: Int = 20
 
   override def parse(allocatedByteArray: Array[Byte]): Either[PackageDataParsingError, NodeId] = Try(
     BigInt(new String(allocatedByteArray, CHARSET).trim())
