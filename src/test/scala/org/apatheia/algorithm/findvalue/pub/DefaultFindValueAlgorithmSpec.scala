@@ -1,12 +1,10 @@
 package org.apatheia.algorithm.findvalue.pub
 
 import cats.effect.IO
-import cats.effect.Ref
 import org.apatheia.algorithm.findvalue.FindValueClient
 import org.apatheia.model.Contact
 import org.apatheia.model.NodeId
 import org.apatheia.model.RoutingTable
-import org.mockito.Mockito._
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatestplus.mockito.MockitoSugar
