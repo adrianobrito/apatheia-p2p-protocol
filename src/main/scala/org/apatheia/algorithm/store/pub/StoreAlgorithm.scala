@@ -1,7 +1,5 @@
 package org.apatheia.algorithm.store.pub
 
-import org.apatheia.model.StoreRequest
-import org.apatheia.error.StoreRequestError
 import org.apatheia.model.Contact
 import org.apatheia.model.NodeId
 

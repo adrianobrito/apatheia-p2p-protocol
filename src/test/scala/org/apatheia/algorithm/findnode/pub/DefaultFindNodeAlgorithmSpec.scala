@@ -1,7 +1,6 @@
 package org.apatheia.algorithm.findnode.pub
 
 import cats.effect.IO
-import cats.Applicative
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import org.scalatestplus.mockito.MockitoSugar

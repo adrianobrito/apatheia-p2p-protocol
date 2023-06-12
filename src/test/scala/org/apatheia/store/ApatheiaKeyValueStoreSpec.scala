@@ -1,6 +1,5 @@
 package org.apatheia.store
 
-import org.scalatest._
 import scala.collection.immutable.HashMap
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers

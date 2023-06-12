@@ -6,7 +6,6 @@ import org.apatheia.model.Contact
 import cats.effect.kernel.Async
 import cats.implicits._
 import cats.Applicative
-import scala.annotation.tailrec
 import org.apatheia.algorithm.findnode.pub.FindNodeAlgorithm
 
 import org.apatheia.algorithm.findnode.FindNodeClient

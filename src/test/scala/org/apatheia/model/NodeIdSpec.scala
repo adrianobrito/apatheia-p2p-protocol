@@ -1,14 +1,11 @@
 package org.apatheia.model
 
-import cats.instances.long
 import org.apatheia.error.PackageDataParsingError
 import org.scalatest.EitherValues
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 
-import java.math.BigInteger
 import java.nio.ByteBuffer
-import java.nio.charset.StandardCharsets
 
 class NodeIdSpec extends AnyFlatSpec with Matchers with EitherValues {
 
