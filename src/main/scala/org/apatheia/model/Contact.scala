@@ -1,7 +1,6 @@
 package org.apatheia.model
 
 import java.nio.ByteBuffer
-import cats.data.Cont
 import org.apatheia.error.PackageDataParsingError
 import java.nio.charset.StandardCharsets
 

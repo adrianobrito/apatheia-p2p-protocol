@@ -6,7 +6,6 @@ import scala.util.Try
 import cats.implicits._
 import java.nio.charset.Charset
 import java.nio.charset.StandardCharsets
-import javax.print.DocFlavor.CHAR_ARRAY
 
 final case class NodeId(val value: BigInt) extends PackageData {
 

@@ -1,6 +1,5 @@
 package org.apatheia.store
 
-import org.apatheia.model.NodeId
 import scala.collection.immutable.HashMap
 
 case class ApatheiaKeyValueStore[T, X](map: HashMap[T, X]) extends KeyValueStore[T, X] {
