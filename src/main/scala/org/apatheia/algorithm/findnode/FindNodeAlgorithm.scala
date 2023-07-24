@@ -8,8 +8,7 @@ trait FindNodeAlgorithm[F[_]] {
 
   def findNode(
     routingTable: RoutingTable,
-    targetId: NodeId,
-    maxIterations: Int = 20
+    targetId: NodeId
   ): F[Set[Contact]]
 
 }
