@@ -1,4 +1,4 @@
-package org.apatheia.algorithm.findvalue.pub
+package org.apatheia.algorithm.findvalue
 
 import org.apatheia.model.NodeId
 import org.apatheia.model.FindValuePayload
@@ -6,7 +6,7 @@ import org.apatheia.error.FindValueError
 
 trait FindValueAlgorithm[F[_]] {
 
-  def findValue(targetId: NodeId)(iterations: Int): F[FindValueAlgorithm.FindValueResult]
+  def findValue(targetId: NodeId): F[FindValueAlgorithm.FindValueResult]
 
 }
 
