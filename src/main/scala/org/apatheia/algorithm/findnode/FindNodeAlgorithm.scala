@@ -1,4 +1,4 @@
-package org.apatheia.algorithm.findnode.pub
+package org.apatheia.algorithm.findnode
 
 import org.apatheia.model.RoutingTable
 import org.apatheia.model.NodeId

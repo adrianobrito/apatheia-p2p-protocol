@@ -1,4 +1,4 @@
-package org.apatheia.algorithm.store.pub
+package org.apatheia.algorithm.store
 
 import org.apatheia.model.Contact
 import org.apatheia.model.NodeId
