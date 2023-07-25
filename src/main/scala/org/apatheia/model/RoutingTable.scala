@@ -2,19 +2,22 @@ package org.apatheia.model
 
 case class RoutingTable(
   nodeId: NodeId,
-  contacts: List[Contact],
+  contacts: Set[Contact],
   k: Int = 20
 ) {
 
-  def addContact(contact: Contact): RoutingTable =
-    RoutingTable(nodeId, contact :: contacts, k)
+  def addContacts(contactSet: Set[Contact]): RoutingTable =
+    RoutingTable(nodeId, contacts ++ contactSet, k)
 
-  def findClosestContacts(targetId: NodeId): List[Contact] =
-    contacts.sortBy(_.nodeId.distance(targetId)).take(k)
+  def addContact(contact: Contact): RoutingTable =
+    RoutingTable(nodeId, contacts + contact, k)
+
+  def findClosestContacts(targetId: NodeId): Set[Contact] =
+    contacts.toList.sortBy(_.nodeId.distance(targetId)).take(k).toSet
 
   def updateContact(contact: Contact): RoutingTable = RoutingTable(
     nodeId = nodeId,
-    contacts = contact :: contacts.filter(_.nodeId != contact.nodeId),
+    contacts = contacts.filter(_.nodeId != contact.nodeId) + contact,
     k = k
   )
 
