@@ -1,6 +1,6 @@
 ThisBuild / organization := "org.apatheia"
 ThisBuild / scalaVersion := "2.13.10"
-ThisBuild / version      := "0.0.11-alpha"
+ThisBuild / version      := "0.0.12-alpha"
 
 lazy val root = (project in file(".")).settings(
   name := "apatheia-p2p-protocol",
